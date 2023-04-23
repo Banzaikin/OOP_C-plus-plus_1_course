@@ -1,29 +1,29 @@
-#define _CRT_SECURE_NO_WARNINGS //чтобы не жаловался
+#define _CRT_SECURE_NO_WARNINGS //С‡С‚РѕР±С‹ РЅРµ Р¶Р°Р»РѕРІР°Р»СЃСЏ
 #include <iostream>
-#include <stdio.h> //для работы с файлами
-#include <windows.h> //для русского ввода-вывода штучки
+#include <stdio.h> //РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С„Р°Р№Р»Р°РјРё
+#include <windows.h> //РґР»СЏ СЂСѓСЃСЃРєРѕРіРѕ РІРІРѕРґР°-РІС‹РІРѕРґР° С€С‚СѓС‡РєРё
 
 using namespace std;
-const int MAXLINE = 255; //макс длина строки
+const int MAXLINE = 255; //РјР°РєСЃ РґР»РёРЅР° СЃС‚СЂРѕРєРё
 
 struct Point
 {
-	char data[MAXLINE]; //строка, название и тд элемента очереди
-	Point* next = nullptr; //следующий элемент очереди
+	char data[MAXLINE]; //СЃС‚СЂРѕРєР°, РЅР°Р·РІР°РЅРёРµ Рё С‚Рґ СЌР»РµРјРµРЅС‚Р° РѕС‡РµСЂРµРґРё
+	Point* next = nullptr; //СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚ РѕС‡РµСЂРµРґРё
 };
-Point* head = nullptr; //указатель на первый элемент очереди
-Point* top = nullptr; //указатель на последний элемент очереди
+Point* head = nullptr; //СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РѕС‡РµСЂРµРґРё
+Point* top = nullptr; //СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ РѕС‡РµСЂРµРґРё
 size_t size_queue = 0;
 
-void push(char* str); //добавить новый элемент сверху
-bool queue_is_empty(); //проверка на пустой стек
+void push(char* str); //РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРІРµСЂС…Сѓ
+bool queue_is_empty(); //РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕР№ СЃС‚РµРє
 
 void create_queue(int size)
 {
 	if (size > 0 && queue_is_empty())
 	{
 		char str[MAXLINE];
-		cout << "Введите ключи " << size << " элементов очереди: " << endl;
+		cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡Рё " << size << " СЌР»РµРјРµРЅС‚РѕРІ РѕС‡РµСЂРµРґРё: " << endl;
 		cin.get();
 		for (int i = 1; i <= size; i++)
 		{
@@ -33,7 +33,7 @@ void create_queue(int size)
 		}
 	}
 }
-void push(char* str) //добавить новый элемент сверху
+void push(char* str) //РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРІРµСЂС…Сѓ
 {
 	if (queue_is_empty())
 	{
@@ -58,7 +58,7 @@ void pop()
 	size_queue--;
 	delete temp;
 }
-bool queue_is_empty() //проверка на пустой стек
+bool queue_is_empty() //РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕР№ СЃС‚РµРє
 {
 	return size_queue == 0;
 }
@@ -74,7 +74,7 @@ void push_before(int index, int k)
 			i++;
 		}
 		char str[MAXLINE];
-		cout << "Введите элементы для вставки: " << endl;
+		cout << "Р’РІРµРґРёС‚Рµ СЌР»РµРјРµРЅС‚С‹ РґР»СЏ РІСЃС‚Р°РІРєРё: " << endl;
 		cin.get();
 		for (int j = 1; j <= k; j++)
 		{
@@ -87,7 +87,7 @@ void push_before(int index, int k)
 			pop();
 		}
 	}
-	else cout << "Очередь пуста или введен неверный индекс" << endl;
+	else cout << "РћС‡РµСЂРµРґСЊ РїСѓСЃС‚Р° РёР»Рё РІРІРµРґРµРЅ РЅРµРІРµСЂРЅС‹Р№ РёРЅРґРµРєСЃ" << endl;
 }
 void output(Point* obj)
 {
@@ -95,14 +95,14 @@ void output(Point* obj)
 	if (obj == top) return;
 	output(obj->next);
 }
-void show_queue() //вывод стека
+void show_queue() //РІС‹РІРѕРґ СЃС‚РµРєР°
 {
-	if (queue_is_empty()) cout << "Очередь пуста" << endl;
+	if (queue_is_empty()) cout << "РћС‡РµСЂРµРґСЊ РїСѓСЃС‚Р°" << endl;
 	else output(head);
 }
 void remove_obj(char* str)
 {
-	if (queue_is_empty()) cout << "Очередь пуста, нечего удалять!" << endl;
+	if (queue_is_empty()) cout << "РћС‡РµСЂРµРґСЊ РїСѓСЃС‚Р°, РЅРµС‡РµРіРѕ СѓРґР°Р»СЏС‚СЊ!" << endl;
 	int i = 1;
 	while (i <= size_queue)
 	{
@@ -124,7 +124,7 @@ void remove_queue()
 	{
 		pop();
 	}
-	cout << size_queue << " Очередь удалена!" << endl;
+	cout << size_queue << " РћС‡РµСЂРµРґСЊ СѓРґР°Р»РµРЅР°!" << endl;
 }
 void toFile_obj(Point* obj, FILE* file)
 {
@@ -133,48 +133,48 @@ void toFile_obj(Point* obj, FILE* file)
 	fputs("\n", file);
 	toFile_obj(obj->next, file);
 }
-void toFile(char* filename) //загрузить в файл ключи стека
+void toFile(char* filename) //Р·Р°РіСЂСѓР·РёС‚СЊ РІ С„Р°Р№Р» РєР»СЋС‡Рё СЃС‚РµРєР°
 {
 	FILE* file;
-	if ((file = fopen(filename, "wb")) == NULL) //ошибка открытия файла 
+	if ((file = fopen(filename, "wb")) == NULL) //РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° 
 	{
-		cout << "Ошибка открытия файла" << endl;
+		cout << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°" << endl;
 		exit(1);
 	}
-	cout << "Заносим данные в файл..." << endl;
+	cout << "Р—Р°РЅРѕСЃРёРј РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»..." << endl;
 	toFile_obj(head, file);
-	cout << "Данные успешно занесены!" << endl;
+	cout << "Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ Р·Р°РЅРµСЃРµРЅС‹!" << endl;
 	fclose(file);
 }
-void fromFile(char* filename) //выгрузить из файла ключи списка
+void fromFile(char* filename) //РІС‹РіСЂСѓР·РёС‚СЊ РёР· С„Р°Р№Р»Р° РєР»СЋС‡Рё СЃРїРёСЃРєР°
 {
 	FILE* file;
 	char row[MAXLINE];
-	if ((file = fopen(filename, "rb")) == NULL) //ошибка открытия файла 
+	if ((file = fopen(filename, "rb")) == NULL) //РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° 
 	{
-		cout << "Ошибка открытия файла" << endl;
+		cout << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°" << endl;
 		exit(2);
 	}
-	cout << "Считываем данные из файла..." << endl;
+	cout << "РЎС‡РёС‚С‹РІР°РµРј РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°..." << endl;
 	while (!feof(file) && fgets(row, MAXLINE, file))
 	{
-		row[strlen(row) - 1] = '\0'; //заносили с \n, нужно его убрать.
+		row[strlen(row) - 1] = '\0'; //Р·Р°РЅРѕСЃРёР»Рё СЃ \n, РЅСѓР¶РЅРѕ РµРіРѕ СѓР±СЂР°С‚СЊ.
 		push(row);
 	}
 	fclose(file);
-	cout << "Данные успешно считаны!" << endl;
+	cout << "Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ СЃС‡РёС‚Р°РЅС‹!" << endl;
 }
 void show_menu()
 {
-	cout << "\tМеню\t" << endl;
-	cout << "0. Выход из меню;" << endl;
-	cout << "1. Создание очереди;" << endl;
-	cout << "2. Вывод ключей объектов очереди;" << endl;
-	cout << "3. Добавление K объектов перед объектом с позицией N;" << endl;
-	cout << "4. Удаление объекта с заданным ключом;" << endl;
-	cout << "5. Удаление очереди;" << endl;
-	cout << "6. Сохранить данные очереди в файл;" << endl;
-	cout << "7. Считать данные из файла в очередь;" << endl;
+	cout << "\tРњРµРЅСЋ\t" << endl;
+	cout << "0. Р’С‹С…РѕРґ РёР· РјРµРЅСЋ;" << endl;
+	cout << "1. РЎРѕР·РґР°РЅРёРµ РѕС‡РµСЂРµРґРё;" << endl;
+	cout << "2. Р’С‹РІРѕРґ РєР»СЋС‡РµР№ РѕР±СЉРµРєС‚РѕРІ РѕС‡РµСЂРµРґРё;" << endl;
+	cout << "3. Р”РѕР±Р°РІР»РµРЅРёРµ K РѕР±СЉРµРєС‚РѕРІ РїРµСЂРµРґ РѕР±СЉРµРєС‚РѕРј СЃ РїРѕР·РёС†РёРµР№ N;" << endl;
+	cout << "4. РЈРґР°Р»РµРЅРёРµ РѕР±СЉРµРєС‚Р° СЃ Р·Р°РґР°РЅРЅС‹Рј РєР»СЋС‡РѕРј;" << endl;
+	cout << "5. РЈРґР°Р»РµРЅРёРµ РѕС‡РµСЂРµРґРё;" << endl;
+	cout << "6. РЎРѕС…СЂР°РЅРёС‚СЊ РґР°РЅРЅС‹Рµ РѕС‡РµСЂРµРґРё РІ С„Р°Р№Р»;" << endl;
+	cout << "7. РЎС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р° РІ РѕС‡РµСЂРµРґСЊ;" << endl;
 }
 void menu()
 {
@@ -192,11 +192,11 @@ void menu()
 		switch (n)
 		{
 		case 0: {
-			cout << "Выход из меню!" << endl;
+			cout << "Р’С‹С…РѕРґ РёР· РјРµРЅСЋ!" << endl;
 			break;
 		}
 		case 1: {
-			cout << "Введите кол-во элементов: ";
+			cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СЌР»РµРјРµРЅС‚РѕРІ: ";
 			cin >> size;
 			create_queue(size);
 			break; }
@@ -205,13 +205,13 @@ void menu()
 			break; }
 
 		case 3: {
-			cout << "Введите кол-во объетов K и позицию N: " << endl;
+			cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ РѕР±СЉРµС‚РѕРІ K Рё РїРѕР·РёС†РёСЋ N: " << endl;
 			cin >> K >> N;
 			push_before(N, K);
 			break;
 		}
 		case 4: {
-			cout << "Введите ключ объекта, который хотите удалить: " << endl;
+			cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ РѕР±СЉРµРєС‚Р°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ: " << endl;
 			cin.get();
 			cin.getline(str, MAXLINE);
 			remove_obj(str);
@@ -221,7 +221,7 @@ void menu()
 		case 5: {remove_queue(); break; }
 		case 6: {toFile(filename); break; }
 		case 7: {fromFile(filename); break; }
-		default: { cout << "Такой команды нет!" << endl; break; }
+		default: { cout << "РўР°РєРѕР№ РєРѕРјР°РЅРґС‹ РЅРµС‚!" << endl; break; }
 		}
 	} while (n != 0);
 }

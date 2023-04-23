@@ -7,44 +7,44 @@ using namespace std;
 
 struct Point
 {
-	char data[255]; //поле данных
-	Point* next = nullptr; //указатель на следующий элемент стека
+	char data[255]; //РїРѕР»Рµ РґР°РЅРЅС‹С…
+	Point* next = nullptr; //СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚ СЃС‚РµРєР°
 };
 
 struct Stack
 {
-	Point* head = nullptr; //указатель на последний элемент стека
+	Point* head = nullptr; //СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ СЃС‚РµРєР°
 	size_t stack_size = 0;
 };
 
-bool stack_is_empty(Stack& stack); //проверка на пустой стек
-void output(Point* obj); //рекурсивная функция для обратного вывода 3 2 1 -> 1 2 3 (ввод был 1 2 3)
-void show_stack(Stack& stack); //вывод стека
-void push(Stack& stack, char* str); //добавить новый элемент сверху
-Stack* create_stack(int size); //создание стека из n элементов
-void remove_obj(Stack& stack, char* str); //удалить объект с заданным ключом
-void push_before(Stack& stack, unsigned index, unsigned k); //вставить перед элементом
-void remove_stack(Stack& stack); //удаление списка
-void toFile_obj(Point* obj, FILE* file); //рекурсия ф-ия для обратного порядка заноса в файл
-void toFile(Stack& stack, char* filename); //загрузить в файл ключи стека
-void fromFile(Stack& stack, char* filename); //выгрузить из файла ключи стека
+bool stack_is_empty(Stack& stack); //РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕР№ СЃС‚РµРє
+void output(Point* obj); //СЂРµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РѕР±СЂР°С‚РЅРѕРіРѕ РІС‹РІРѕРґР° 3 2 1 -> 1 2 3 (РІРІРѕРґ Р±С‹Р» 1 2 3)
+void show_stack(Stack& stack); //РІС‹РІРѕРґ СЃС‚РµРєР°
+void push(Stack& stack, char* str); //РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРІРµСЂС…Сѓ
+Stack* create_stack(int size); //СЃРѕР·РґР°РЅРёРµ СЃС‚РµРєР° РёР· n СЌР»РµРјРµРЅС‚РѕРІ
+void remove_obj(Stack& stack, char* str); //СѓРґР°Р»РёС‚СЊ РѕР±СЉРµРєС‚ СЃ Р·Р°РґР°РЅРЅС‹Рј РєР»СЋС‡РѕРј
+void push_before(Stack& stack, unsigned index, unsigned k); //РІСЃС‚Р°РІРёС‚СЊ РїРµСЂРµРґ СЌР»РµРјРµРЅС‚РѕРј
+void remove_stack(Stack& stack); //СѓРґР°Р»РµРЅРёРµ СЃРїРёСЃРєР°
+void toFile_obj(Point* obj, FILE* file); //СЂРµРєСѓСЂСЃРёСЏ С„-РёСЏ РґР»СЏ РѕР±СЂР°С‚РЅРѕРіРѕ РїРѕСЂСЏРґРєР° Р·Р°РЅРѕСЃР° РІ С„Р°Р№Р»
+void toFile(Stack& stack, char* filename); //Р·Р°РіСЂСѓР·РёС‚СЊ РІ С„Р°Р№Р» РєР»СЋС‡Рё СЃС‚РµРєР°
+void fromFile(Stack& stack, char* filename); //РІС‹РіСЂСѓР·РёС‚СЊ РёР· С„Р°Р№Р»Р° РєР»СЋС‡Рё СЃС‚РµРєР°
 
-bool stack_is_empty(Stack& stack) //проверка на пустой стек
+bool stack_is_empty(Stack& stack) //РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕР№ СЃС‚РµРє
 {
 	return stack.head == nullptr; //stack_size = 0;
 }
-void output(Point* obj) //рекурсивная функция для обратного вывода 3 2 1 -> 1 2 3 (ввод был 1 2 3)
+void output(Point* obj) //СЂРµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РѕР±СЂР°С‚РЅРѕРіРѕ РІС‹РІРѕРґР° 3 2 1 -> 1 2 3 (РІРІРѕРґ Р±С‹Р» 1 2 3)
 {
 	if (obj == nullptr) return;
 	output(obj->next);
 	cout << obj->data << endl;
 }
-void show_stack(Stack& stack) //вывод стека
+void show_stack(Stack& stack) //РІС‹РІРѕРґ СЃС‚РµРєР°
 {
-	if (stack_is_empty(stack)) cout << "Стек пуст" << endl;
+	if (stack_is_empty(stack)) cout << "РЎС‚РµРє РїСѓСЃС‚" << endl;
 	else output(stack.head);
 }
-void push(Stack& stack, char* str) //добавить новый элемент сверху
+void push(Stack& stack, char* str) //РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРІРµСЂС…Сѓ
 {
 	stack.stack_size++;
 	Point* obj = new Point;
@@ -62,13 +62,13 @@ void pop(Stack& stack)
 		stack.stack_size--;
 	}
 }
-Stack* create_stack(int size) //создание стека из n элементов
+Stack* create_stack(int size) //СЃРѕР·РґР°РЅРёРµ СЃС‚РµРєР° РёР· n СЌР»РµРјРµРЅС‚РѕРІ
 {
 	Stack* stack = new Stack;
 	if (size > 0 && stack_is_empty(*stack))
 	{
 		char str[255];
-		cout << "Введите ключи " << size << " элементов стека: " << endl;
+		cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡Рё " << size << " СЌР»РµРјРµРЅС‚РѕРІ СЃС‚РµРєР°: " << endl;
 		cin.get();
 		for (int i = 1; i <= size; i++)
 		{
@@ -82,7 +82,7 @@ Stack* create_stack(int size) //создание стека из n элементов
 void push_before(Stack& stack, unsigned index, unsigned k)
 {
 	int new_index = stack.stack_size - index + 1;
-	if (new_index < 0 || stack_is_empty(stack)) cout << "Введен неверный индекс/стек пуст" << endl;
+	if (new_index < 0 || stack_is_empty(stack)) cout << "Р’РІРµРґРµРЅ РЅРµРІРµСЂРЅС‹Р№ РёРЅРґРµРєСЃ/СЃС‚РµРє РїСѓСЃС‚" << endl;
 	else
 	{
 		char str[255];
@@ -92,7 +92,7 @@ void push_before(Stack& stack, unsigned index, unsigned k)
 			push(*stack2, stack.head->data);
 			pop(stack);
 		}
-		cout << "Введите " << k << " элементов: " << endl;
+		cout << "Р’РІРµРґРёС‚Рµ " << k << " СЌР»РµРјРµРЅС‚РѕРІ: " << endl;
 		cin.get();
 		for (int i = 1; i <= k; i++)
 		{
@@ -127,7 +127,7 @@ void remove_obj(Stack& stack, char* str)
 		pop(*stack2);
 	}
 }
-void remove_stack(Stack& stack) //удаление списка
+void remove_stack(Stack& stack) //СѓРґР°Р»РµРЅРёРµ СЃРїРёСЃРєР°
 {
 	Point* temp;
 	while (stack.head != nullptr)
@@ -137,7 +137,7 @@ void remove_stack(Stack& stack) //удаление списка
 		stack.head = temp;
 	}
 	stack.stack_size = 0;
-	cout << "Список удален!" << endl;
+	cout << "РЎРїРёСЃРѕРє СѓРґР°Р»РµРЅ!" << endl;
 }
 void toFile_obj(Point* obj, FILE* file)
 {
@@ -146,47 +146,47 @@ void toFile_obj(Point* obj, FILE* file)
 	fputs(obj->data, file);
 	fputs("\n", file);
 }
-void toFile(Stack& stack, char* filename) //загрузить в файл ключи стека
+void toFile(Stack& stack, char* filename) //Р·Р°РіСЂСѓР·РёС‚СЊ РІ С„Р°Р№Р» РєР»СЋС‡Рё СЃС‚РµРєР°
 {
 	FILE* file;
-	if ((file = fopen(filename, "wb")) == NULL) //ошибка открытия файла 
+	if ((file = fopen(filename, "wb")) == NULL) //РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° 
 	{
-		cout << "Ошибка открытия файла" << endl;
+		cout << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°" << endl;
 		exit(1);
 	}
-	cout << "Заносим данные в файл..." << endl;
+	cout << "Р—Р°РЅРѕСЃРёРј РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»..." << endl;
 	toFile_obj(stack.head, file);
-	cout << "Данные успешно занесены!" << endl;
+	cout << "Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ Р·Р°РЅРµСЃРµРЅС‹!" << endl;
 	fclose(file);
 }
-void fromFile(Stack& stack, char* filename) //выгрузить из файла ключи списка
+void fromFile(Stack& stack, char* filename) //РІС‹РіСЂСѓР·РёС‚СЊ РёР· С„Р°Р№Р»Р° РєР»СЋС‡Рё СЃРїРёСЃРєР°
 {
 	FILE* file;
 	char row[255];
-	if ((file = fopen(filename, "rb")) == NULL) //ошибка открытия файла 
+	if ((file = fopen(filename, "rb")) == NULL) //РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° 
 	{
-		cout << "Ошибка открытия файла" << endl;
+		cout << "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°" << endl;
 		exit(2);
 	}
-	cout << "Считываем данные из файла..." << endl;
+	cout << "РЎС‡РёС‚С‹РІР°РµРј РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°..." << endl;
 	while (!feof(file) && fgets(row, 255, file))
 	{
-		row[strlen(row) - 1] = '\0'; //заносили с \n, нужно его убрать.
+		row[strlen(row) - 1] = '\0'; //Р·Р°РЅРѕСЃРёР»Рё СЃ \n, РЅСѓР¶РЅРѕ РµРіРѕ СѓР±СЂР°С‚СЊ.
 		push(stack, row);
 	}
 	fclose(file);
-	cout << "Данные успешно считаны!" << endl;
+	cout << "Р”Р°РЅРЅС‹Рµ СѓСЃРїРµС€РЅРѕ СЃС‡РёС‚Р°РЅС‹!" << endl;
 }
-//меню команд
+//РјРµРЅСЋ РєРѕРјР°РЅРґ
 const char menu[] =
-"0.	Выход из программы\n"
-"1.	Создание стека\n"
-"2.	Добавление элемента в стек.\n"
-"3.	Удаление элемента из стека.\n"
-"4.	Печать стека.\n"
-"5.	Запись стека в файл.\n"
-"6.	Уничтожение стека.\n"
-"7.	Восстановление стека из файла.\n";
+"0.	Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹\n"
+"1.	РЎРѕР·РґР°РЅРёРµ СЃС‚РµРєР°\n"
+"2.	Р”РѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РІ СЃС‚РµРє.\n"
+"3.	РЈРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РёР· СЃС‚РµРєР°.\n"
+"4.	РџРµС‡Р°С‚СЊ СЃС‚РµРєР°.\n"
+"5.	Р—Р°РїРёСЃСЊ СЃС‚РµРєР° РІ С„Р°Р№Р».\n"
+"6.	РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ СЃС‚РµРєР°.\n"
+"7.	Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃС‚РµРєР° РёР· С„Р°Р№Р»Р°.\n";
 
 int main()
 {
@@ -201,57 +201,57 @@ int main()
 	for (;;)
 	{
 		cout << menu << endl;
-		cout << "\nВыберите команду: ";
+		cout << "\nР’С‹Р±РµСЂРёС‚Рµ РєРѕРјР°РЅРґСѓ: ";
 		cin >> cmd;
 		cout << endl;
 		switch (cmd)
 		{
-		case 0: //выход из программы
-			cout << "Спасибо что выбрали данную программу!" << endl;
+		case 0: //РІС‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹
+			cout << "РЎРїР°СЃРёР±Рѕ С‡С‚Рѕ РІС‹Р±СЂР°Р»Рё РґР°РЅРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ!" << endl;
 			return 0;
-		case 1: //создание стека
-			cout << "Введите кол-во элементов в списке: ";
+		case 1: //СЃРѕР·РґР°РЅРёРµ СЃС‚РµРєР°
+			cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ СЃРїРёСЃРєРµ: ";
 			cin >> size;
 			stack = create_stack(size);
 			break;
-		case 2: //добавление элементов в стека
-			cout << "Введите кол-во объетов и позицию: " << endl;
+		case 2: //РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ РІ СЃС‚РµРєР°
+			cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ РѕР±СЉРµС‚РѕРІ Рё РїРѕР·РёС†РёСЋ: " << endl;
 			cin >> k >> n;
 			push_before(*stack, k, n);
 			break;
-		case 3: //удаление элемента из стека по ключу
-			cout << "Введите ключ объекта, который хотите удалить: " << endl;
+		case 3: //СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РёР· СЃС‚РµРєР° РїРѕ РєР»СЋС‡Сѓ
+			cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ РѕР±СЉРµРєС‚Р°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ: " << endl;
 			cin.get();
 			cin.getline(keys, 255);
 			remove_obj(*stack, keys);
 			break;
-		case 4: //печать стека
+		case 4: //РїРµС‡Р°С‚СЊ СЃС‚РµРєР°
 			if (size <= 0) {
-				cout << "Стек пуст!" << endl;
+				cout << "РЎС‚РµРє РїСѓСЃС‚!" << endl;
 			}
 			else {
-				cout << "Сейчас стек такой" << endl;
+				cout << "РЎРµР№С‡Р°СЃ СЃС‚РµРє С‚Р°РєРѕР№" << endl;
 				show_stack(*stack);
 			}
 			break;
-		case 5: //запись в файл
+		case 5: //Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р»
 			toFile(*stack, filename);
 			break;
-		case 6: //удаление стека
+		case 6: //СѓРґР°Р»РµРЅРёРµ СЃС‚РµРєР°
 			if (size == 0) {
-				cout << "Стек пуст, удалять нечего" << endl;
+				cout << "РЎС‚РµРє РїСѓСЃС‚, СѓРґР°Р»СЏС‚СЊ РЅРµС‡РµРіРѕ" << endl;
 			}
 			else {
 				remove_stack(*stack); 
-				cout << "Стека успешно удален" << endl;
+				cout << "РЎС‚РµРєР° СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ" << endl;
 				size = 0;
 			}
 			break;
-		case 7: //считывание с файла
+		case 7: //СЃС‡РёС‚С‹РІР°РЅРёРµ СЃ С„Р°Р№Р»Р°
 			fromFile(*stack, filename);
 			break;
 		default:
-			cout << "Неправильная команда, попробуйте другую" << endl;
+			cout << "РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РєРѕРјР°РЅРґР°, РїРѕРїСЂРѕР±СѓР№С‚Рµ РґСЂСѓРіСѓСЋ" << endl;
 		}
 		system("pause");
 		system("cls");
