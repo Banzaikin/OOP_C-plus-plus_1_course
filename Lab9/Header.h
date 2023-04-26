@@ -1,15 +1,7 @@
 #pragma once
-#include <iostream>
-#include <algorithm>		// для min/max
-using namespace std;
-// -------------------------------------------------------------------//
-//	если ф-ия имеет параметр с const, тогда и все связанные 
-//	с ней ф-ии должны иметь тот же модификатор!
-//	110(LinkedList.cpp) - конструктор копировани¤: имеет const list, 
-//	работает с индексами через оператор [] => перегрузка
-//	оператора [] должна иметь в конце const!! 90(LinkedList.cpp)
-//  тоже самое с 65, 71, 77 (77 имеет const)
-//-------------------------------------------------------------------//
+#include <algorithm>			// для min/max
+#include "Error.h"
+
 struct Pair
 {
 	Pair() {}
@@ -21,7 +13,6 @@ struct Pair
 
 	int numINT = 0;
 	double numDOUBLE = 0;
-
 
 	Pair& operator =(const Pair& pair)
 	{
@@ -46,7 +37,7 @@ struct Pair
 		in >> pair.numINT >> pair.numDOUBLE;
 		return in;
 	}
-	
+
 	Pair operator * (Pair& pair)
 	{
 		Pair new_pair;
@@ -55,6 +46,7 @@ struct Pair
 		return new_pair;
 	}
 };
+
 //-------------------------//
 //	связь списка
 //-------------------------//
@@ -71,46 +63,75 @@ template <typename T>
 class Iterator
 {
 private:
-	Point<T>* elem = nullptr;		// указатель на св¤зь
+	Point<T>* elem = nullptr;		// указатель на связь
 public:
 	Iterator() { elem = nullptr; }
 	Iterator(Point<T>* point) { elem = point; }
 	Iterator(const Iterator& it) { elem = it.elem; };
 	bool operator == (const Iterator& it) { return elem == it.elem; }
 	bool operator != (const Iterator& it) { return elem != it.elem; }
-	void operator ++ () { elem = elem->next; };			// ++i - смещение вправо на 1
-	void operator ++ (int) { elem = elem->next; };		// i++ - смещение вправо на 1
-		//---------// i+n - смещение вправо на n
-	Iterator& operator + (int n)
-	{
-		for (int i = 0; i < n && elem->next != nullptr; i++)
-			elem = elem->next;
-		return *this;
-	}
-	T operator * () const { return elem->num; };      // разыменование итератора (вывод)
+	Iterator& operator ++ ();		// ++i - смещение вправо на 1									
+	Iterator operator ++ (int);		// i++ - смещение вправо на 1									
+	Iterator& operator + (int n);										
+	T operator * () const;												
 };
 
+template <typename T>
+T Iterator<T>::operator * () const
+{
+	if (elem)
+		return elem->num;
+	else
+		throw IndexError2();
+}
+
+template <typename T>
+Iterator<T>& Iterator<T>::operator ++ ()
+{
+	if (elem == nullptr) throw IndexError2();
+	elem = elem->next;
+	return *this;
+}
+
+template <typename T>
+Iterator<T> Iterator<T>::operator ++ (int)
+{
+	if (elem == nullptr) throw IndexError2();
+	Iterator<T> temp(elem);
+	++(*this);
+	return temp;
+}
+
+template <typename T>
+Iterator<T>& Iterator<T>::operator + (int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		if (elem == nullptr) throw IndexError2();
+		elem = elem->next;
+	}
+	return *this;
+}
 //-------------------------//
-//	св¤занный список
+//	связанный список
 //-------------------------//
 template <typename T>
 class LinkedList
 {
 private:
-	size_t size = 0;								// размер списка
-	Point<T>* head = nullptr;						// указатель на первый элемент	
-	Point<T>* top = nullptr;						// указатель на ласт элемент
+	size_t size = 0;				// размер списка					
+	Point<T>* head = nullptr;		// указатель на первый элемент					
+	Point<T>* top = nullptr;		// указатель на ласт элемент					
+		//-------------------------------вывод----------------------------------------//
 	void output(Point<T>* obj) const;
 	void show() const;
 
 public:
-	//-------------------------------вывод----------------------------------------//
 	friend ostream& operator<<(ostream& out, const LinkedList<T>& list)
 	{
 		list.show();
 		return out;
 	}
-	//-------------------------------ввод-----------------------------------------//
 	friend istream& operator>>(istream& in, LinkedList<T>& list)
 	{
 		T k;
@@ -118,20 +139,18 @@ public:
 		list.push(k);
 		return in;
 	}
-	//---------------------------------------------------------------------------//
-	LinkedList();										// конструктор
-	LinkedList(size_t s, T k);							// констуктор: s - размер, k - значение по умолчанию
-	~LinkedList();										// деструктор
-	LinkedList(const LinkedList<T>& list);				// конструктор копировани¤
-	T& operator [](int index) const;					// доступ по индексу
-	LinkedList& operator =(const LinkedList<T>& list);	// оператор присваивани¤
-	LinkedList operator * (LinkedList<T>& list);		// умножение списка на список
-	int operator ()() { return size; };					// возвращение длины списка
-	void push(T k);										// добавление в конец списка
-	T pop();											// удаление первого элемента
-	Iterator<T> first() { return Iterator<T>(head); }	// возвращает указатель на первый элемент
-	Iterator<T> last() { return Iterator<T>(top); }		// вовзращает указаетль на последний элемент
-
+	LinkedList();											// конструктор
+	LinkedList(size_t s, T k);								// констуктор: s - размер, k - значение по умолчанию
+	~LinkedList();											// деструктор
+	LinkedList(const LinkedList<T>& list);					// конструктор копирования
+	T& operator [](int index) const;						// доступ по индексу
+	LinkedList& operator =(const LinkedList<T>& list);		// оператор присваивания
+	LinkedList operator * (LinkedList<T>& list);			// умножение списка на список
+	int operator ()() { return size; };						// возвращение длины списка
+	void push(T k);											// добавление в конец списка
+	T pop();												// удаление первого элемента
+	Iterator<T> first() { return Iterator<T>(head); }		// возвращает указатель на первый элемент
+	Iterator<T> last() { return Iterator<T>(top->next); }	// вовзращает указаетль на последний элемент
 };
 
 
@@ -160,31 +179,36 @@ LinkedList<T>::LinkedList(size_t s, T k)
 			temp = obj;
 		}
 		top = obj;
+
 	}
 }
 
 template <typename T>
 void LinkedList<T>::push(T k)
 {
+	
 	if (size == 0)
 	{
 		head = new Point<T>;
 		head->num = k;
 		top = head;
-	}
 
+	}
+	
 	else {
 		Point<T>* obj = new Point<T>;
 		top->next = obj;
 		obj->num = k;
 		top = obj;
 	}
+
 	size++;
 }
 
 template <typename T>
 T LinkedList<T>::pop()
 {
+	if (size == 0) throw EmptySizeError();
 	T k = head->num;
 	Point<T>* temp = head;
 	head = head->next;
@@ -196,7 +220,7 @@ T LinkedList<T>::pop()
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
-	cout << endl << "вызван деструктор!" << endl << endl;
+	cout << endl << "Элементы удалены!" << endl << endl;
 	while (head != nullptr)
 	{
 		pop();
@@ -213,29 +237,25 @@ void LinkedList<T>::output(Point<T>* obj) const
 template <typename T>
 void LinkedList<T>::show() const
 {
-	if (size == 0) cout << "список пуст" << endl;
+	if (size == 0) cout << "Размер равен 0" << endl;
 	else output(head);
 }
 
 template <typename T>
 T& LinkedList<T>::operator[](int index) const
 {
-	if (index < size && index >= 0)
+	if (index == 0 && size == 0) throw IndexError();
+	if (index < 0) throw IndexError1();
+	if (index >= size) throw IndexError2();
+	Point<T>* temp = head;
+	int count = 0;
+	while (temp != nullptr)
 	{
-		Point<T>* temp = head;
-		int count = 0;
-		while (temp != nullptr)
-		{
-			if (count == index)
-				return temp->num;
-			temp = temp->next;
-			++count;
-		}
+		if (count == index)
+			return temp->num;
+		temp = temp->next;
+		++count;
 	}
-	cout << endl << endl;
-	perror("ошибка индексировани¤");
-	cout << endl;
-	exit(1);
 }
 
 template <typename T>
@@ -250,12 +270,13 @@ LinkedList<T>::LinkedList(const LinkedList<T>& list)
 template <typename T>
 LinkedList<T>& LinkedList<T>::operator =(const LinkedList<T>& list)
 {
-
 	int size_temp = size;
+
 	for (int i = 0; i < size_temp; i++)
 	{
 		this->pop();
 	}
+
 	for (int i = 0; i < list.size; i++)
 	{
 		this->push(list[i]);
@@ -266,6 +287,7 @@ LinkedList<T>& LinkedList<T>::operator =(const LinkedList<T>& list)
 template <typename T>
 LinkedList<T> LinkedList<T>::operator * (LinkedList<T>& list)
 {
+
 	T nulik;
 	nulik = 0;
 	LinkedList<T> new_list;
