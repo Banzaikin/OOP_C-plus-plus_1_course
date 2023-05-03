@@ -9,7 +9,7 @@ using namespace std;
 
 void ex_1()
 {
-	cout << "Введите размер листа: " << endl;
+	cout << "Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂ Р»РёСЃС‚Р°: " << endl;
 	int n;
 	cin >> n;
 	list<Pair> lst;
@@ -25,19 +25,19 @@ void ex_1()
 	sr.a = sr.a / lst.size();
 	sr.b = sr.b / lst.size();
 	lst.push_back(sr);
-	cout << "Среднее:\n";
+	cout << "РЎСЂРµРґРЅРµРµ:\n";
 	for_each(lst.begin(), lst.end(), [](Pair p) {cout << p << endl; });
 
 	//2
-	cout << "Введите удаляемое: " << endl;
+	cout << "Р’РІРµРґРёС‚Рµ СѓРґР°Р»СЏРµРјРѕРµ: " << endl;
 	cin >> p;
 	auto it = remove(lst.begin(), lst.end(), p);
 	lst.erase(it, lst.end());
-	cout << "Удаление заданного: " << endl;
+	cout << "РЈРґР°Р»РµРЅРёРµ Р·Р°РґР°РЅРЅРѕРіРѕ: " << endl;
 	for_each(lst.begin(), lst.end(), [](Pair p) {cout << p << endl; });
 
 	//3 
-	cout << "Добавление макс и мин: " << endl;
+	cout << "Р”РѕР±Р°РІР»РµРЅРёРµ РјР°РєСЃ Рё РјРёРЅ: " << endl;
 	Pair max = *max_element(lst.begin(), lst.end());
 	Pair min = *min_element(lst.begin(), lst.end());
 	for (Pair& c : lst)
@@ -57,7 +57,7 @@ void ex_2()
 	lst.push(Pair(1, 1.5));
 	lst.push(Pair(-2, 2.7));
 	lst.push(Pair(3, -3.2));
-	cout << "Изначальный список:\n";
+	cout << "РР·РЅР°С‡Р°Р»СЊРЅС‹Р№ СЃРїРёСЃРѕРє:\n";
 
 	//1
 	Pair sr(0, 0);
@@ -71,7 +71,7 @@ void ex_2()
 	sr.a /= tmp.size();
 	sr.b /= tmp.size();
 
-	cout << "Среднее ариф., добавленное в конец:\n";
+	cout << "РЎСЂРµРґРЅРµРµ Р°СЂРёС„., РґРѕР±Р°РІР»РµРЅРЅРѕРµ РІ РєРѕРЅРµС†:\n";
 	while (!tmp.empty())
 	{
 		cout << tmp.top() << endl;
@@ -85,8 +85,8 @@ void ex_2()
 	int k = 1;
 	int i, j;
 	Pair res;
-	cout << "Диапозон: "; cin >> i >> j;
-	cout << "Ключ: ";  cin >> res;
+	cout << "Р”РёР°РїРѕР·РѕРЅ: "; cin >> i >> j;
+	cout << "РљР»СЋС‡: ";  cin >> res;
 	while (!lst.empty())
 	{
 		if ((k < i) || (k > j) || (res != lst.top()))
@@ -96,7 +96,7 @@ void ex_2()
 		lst.pop();
 		k++;
 	}
-	cout << "Удаленные элементы из заданного диапозона:\n";
+	cout << "РЈРґР°Р»РµРЅРЅС‹Рµ СЌР»РµРјРµРЅС‚С‹ РёР· Р·Р°РґР°РЅРЅРѕРіРѕ РґРёР°РїРѕР·РѕРЅР°:\n";
 	Pair max = tmp.top();
 	Pair min = tmp.top();
 	while (!tmp.empty())
@@ -109,7 +109,7 @@ void ex_2()
 	}
 
 	//3
-	cout << "Добавить макс. и мин. к каждому элементу:\n";
+	cout << "Р”РѕР±Р°РІРёС‚СЊ РјР°РєСЃ. Рё РјРёРЅ. Рє РєР°Р¶РґРѕРјСѓ СЌР»РµРјРµРЅС‚Сѓ:\n";
 	while (!lst.empty())
 	{
 		tmp.push(max + min + lst.top());
@@ -126,7 +126,7 @@ void ex_2()
 void ex_3()
 {
 	map <int, int> myMap = { {1, 2}, {2, 4}, {3, 6} };
-	cout << "Добавляем среднее ариф среди значений в конец:\n";
+	cout << "Р”РѕР±Р°РІР»СЏРµРј СЃСЂРµРґРЅРµРµ Р°СЂРёС„ СЃСЂРµРґРё Р·РЅР°С‡РµРЅРёР№ РІ РєРѕРЅРµС†:\n";
 	int sum = 0;
 	for (auto& p : myMap) {
 		sum += p.second;
@@ -137,11 +137,11 @@ void ex_3()
 		cout << p.first << ": " << p.second << endl;
 	}
 
-	cout << "Удаляем ключ 2:\n";
-	myMap.erase(2); // удалить элемент с ключом 2
+	cout << "РЈРґР°Р»СЏРµРј РєР»СЋС‡ 2:\n";
+	myMap.erase(2); // СѓРґР°Р»РёС‚СЊ СЌР»РµРјРµРЅС‚ СЃ РєР»СЋС‡РѕРј 2
 
 
-	cout << "Добавляем макс и мин значения к значениям ключей:\n";
+	cout << "Р”РѕР±Р°РІР»СЏРµРј РјР°РєСЃ Рё РјРёРЅ Р·РЅР°С‡РµРЅРёСЏ Рє Р·РЅР°С‡РµРЅРёСЏРј РєР»СЋС‡РµР№:\n";
 	auto maxIt = std::max_element(myMap.begin(), myMap.end(),
 		[](const auto& p1, const auto& p2) { return p1.second < p2.second; });
 	auto minIt = std::min_element(myMap.begin(), myMap.end(),
@@ -149,7 +149,7 @@ void ex_3()
 	int maxVal = maxIt->second;
 	int minVal = minIt->second;
 
-	// добавить максимальное и минимальное значение ко всем элементам
+	// РґРѕР±Р°РІРёС‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Рё РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РєРѕ РІСЃРµРј СЌР»РµРјРµРЅС‚Р°Рј
 	for (auto& p : myMap) {
 		p.second += maxVal + minVal;
 		cout << p.first << " : " << p.second << endl;
